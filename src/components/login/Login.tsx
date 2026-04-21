@@ -61,8 +61,14 @@ export default function Login({ initialIsLogin = true }: { initialIsLogin?: bool
       } else {
         toast.success("Account created successfully! Please log in to continue.");
         addNotification(`Account created for ${loginName}! Please log in to your account.`, "success");
-        // Clear sensitive fields and switch to login view
-        setFormData(prev => ({ ...prev, password: "", confirmPassword: "" }));
+        // Clear all fields and switch to login view
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
         setIsLogin(true);
       }
     } else {
@@ -83,7 +89,10 @@ export default function Login({ initialIsLogin = true }: { initialIsLogin?: bool
         {/* Toggle Switch */}
         <div className={`p-1 rounded-full mb-12 flex items-center backdrop-blur-md border transition-all duration-300 w-fit ${dark ? 'bg-[#1e293b]/50 border-slate-700/50' : 'bg-white/50 border-slate-200'}`}>
           <button
-            onClick={() => setIsLogin(false)}
+            onClick={() => {
+              setIsLogin(false);
+              setFormData({ firstName: "", lastName: "", email: "", password: "", confirmPassword: "" });
+            }}
             className={`px-8 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
               !isLogin 
                 ? "bg-indigo-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.4)]" 
@@ -93,7 +102,10 @@ export default function Login({ initialIsLogin = true }: { initialIsLogin?: bool
             Sign Up
           </button>
           <button
-            onClick={() => setIsLogin(true)}
+            onClick={() => {
+              setIsLogin(true);
+              setFormData({ firstName: "", lastName: "", email: "", password: "", confirmPassword: "" });
+            }}
             className={`px-8 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
               isLogin 
                 ? "bg-indigo-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.4)]" 
@@ -157,6 +169,7 @@ export default function Login({ initialIsLogin = true }: { initialIsLogin?: bool
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   placeholder="Enter Your Email"
+                  autoComplete={isLogin ? "email" : "off"}
                   className={`w-full bg-transparent pl-4 pr-4 py-4 outline-none autofill:shadow-[0_0_0_1000px_${dark ? '#020617' : '#f0f4ff'}_inset] transition-colors duration-300 ${dark ? 'text-slate-400 placeholder:text-slate-400 autofill:text-slate-400' : 'text-slate-700 placeholder:text-slate-500 autofill:text-slate-700'}`}
                 />
               </div>
@@ -172,6 +185,7 @@ export default function Login({ initialIsLogin = true }: { initialIsLogin?: bool
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   placeholder="Password"
+                  autoComplete={isLogin ? "current-password" : "new-password"}
                   className={`w-full bg-transparent pl-4 pr-12 py-4 outline-none autofill:shadow-[0_0_0_1000px_${dark ? '#020617' : '#f0f4ff'}_inset] transition-colors duration-300 ${dark ? 'text-slate-400 placeholder:text-slate-400 autofill:text-slate-400' : 'text-slate-700 placeholder:text-slate-500 autofill:text-slate-700'}`}
                 />
                 <button 
@@ -195,6 +209,7 @@ export default function Login({ initialIsLogin = true }: { initialIsLogin?: bool
                     value={formData.confirmPassword}
                     onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                     placeholder="Confirm Password"
+                    autoComplete="new-password"
                     className={`w-full bg-transparent pl-4 pr-12 py-4 outline-none autofill:shadow-[0_0_0_1000px_${dark ? '#020617' : '#f0f4ff'}_inset] transition-colors duration-300 ${dark ? 'text-slate-400 placeholder:text-slate-400 autofill:text-slate-400' : 'text-slate-700 placeholder:text-slate-500 autofill:text-slate-700'}`}
                   />
                   <button 
