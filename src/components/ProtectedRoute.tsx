@@ -2,20 +2,30 @@
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function ProtectedRoute({ children }: { children: React.ReactNode }) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, loading } = useAuth();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (mounted && !loading && !isAuthenticated) {
       router.push("/login");
     }
-  }, [isAuthenticated, router]);
+  }, [mounted, loading, isAuthenticated, router]);
+
+  // Keep SSR and first client paint consistent to avoid hydration mismatch.
+  if (!mounted || loading) {
+    return null;
+  }
 
   if (!isAuthenticated) {
-    return null; // Or a loading spinner
+    return null;
   }
 
   return <>{children}</>;

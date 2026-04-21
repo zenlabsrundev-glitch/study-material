@@ -21,11 +21,22 @@ export const AppDataSource = new DataSource({
   migrations: [],
 });
 
+let dataSourceInitPromise: Promise<DataSource> | null = null;
+
 // Helper to ensure connection is initialized, especially useful in Serverless/Next.js environments
 export async function getDataSource() {
   if (AppDataSource.isInitialized) {
     return AppDataSource;
   }
-  await AppDataSource.initialize();
-  return AppDataSource;
+
+  if (!dataSourceInitPromise) {
+    dataSourceInitPromise = AppDataSource.initialize()
+      .then(() => AppDataSource)
+      .catch((error) => {
+        dataSourceInitPromise = null;
+        throw error;
+      });
+  }
+
+  return dataSourceInitPromise;
 }

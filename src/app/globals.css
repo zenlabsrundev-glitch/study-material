@@ -239,3 +239,59 @@
     line-height: 1.5;
   }
 }
+
+/* Global app scrollbar styling (page + scroll containers) */
+html,
+body,
+* {
+  scrollbar-width: auto;
+  scrollbar-color: rgba(226, 232, 240, 0.75) #111827;
+}
+
+/* Chromium/Edge/WebKit */
+*::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #111827;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(226, 232, 240, 0.9), rgba(203, 213, 225, 0.8));
+  border-radius: 999px;
+  border: 3px solid #111827;
+  min-height: 48px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(241, 245, 249, 0.95), rgba(226, 232, 240, 0.9));
+}
+
+*::-webkit-scrollbar-corner {
+  background: #111827;
+}
+
+/* Arrow buttons (supported in some Chromium variants) */
+*::-webkit-scrollbar-button:single-button {
+  display: block;
+  height: 16px;
+  background-color: #111827;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+*::-webkit-scrollbar-button:single-button:vertical:decrement {
+  background:
+    linear-gradient(135deg, transparent 50%, rgba(226, 232, 240, 0.95) 50%) 50% 56%/8px 8px no-repeat,
+    linear-gradient(225deg, transparent 50%, rgba(226, 232, 240, 0.95) 50%) 50% 56%/8px 8px no-repeat,
+    #111827;
+}
+
+*::-webkit-scrollbar-button:single-button:vertical:increment {
+  background:
+    linear-gradient(-45deg, transparent 50%, rgba(226, 232, 240, 0.95) 50%) 50% 44%/8px 8px no-repeat,
+    linear-gradient(45deg, transparent 50%, rgba(226, 232, 240, 0.95) 50%) 50% 44%/8px 8px no-repeat,
+    #111827;
+}

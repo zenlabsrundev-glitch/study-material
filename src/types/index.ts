@@ -21,6 +21,7 @@ export const BRANCHES = [
   "Mechanical Engineering",
   "Civil Engineering",
   "Chemical Engineering",
+  "Physics",
 ] as const;
 
 export const SEMESTERS = [

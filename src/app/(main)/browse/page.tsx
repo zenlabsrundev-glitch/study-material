@@ -1,3 +1,5 @@
+"use client";
+
 import Browse from "@/components/browse/Browse";
 import MainLayout from "@/components/layout/Layout";
 

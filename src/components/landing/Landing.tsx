@@ -163,7 +163,7 @@ export default function Landing() {
   };
 
   return (
-    <div style={{ background: theme.bg, color: theme.text, minHeight: "100vh", fontFamily: "'Inter', sans-serif", transition: "all 0.3s" }}>
+    <div style={{ background: theme.bg, color: theme.text, minHeight: "100vh", fontFamily: "'Inter', sans-serif", transition: "all 0.3s", width: "100%", maxWidth: "100vw", overflowX: "hidden" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -272,6 +272,7 @@ export default function Landing() {
           .landing-topbar { height: 64px !important; padding: 0 14px !important; }
           .landing-logo-text { font-size: 16px !important; }
           .landing-login-btn { padding: 8px 16px !important; font-size: 13px !important; }
+          .landing-right-controls { gap: 8px !important; margin-right: 2px !important; }
           .landing-mobile-nav { display: flex !important; }
           .hero-grid, .about-grid { grid-template-columns: 1fr !important; text-align: center; gap: 40px !important; }
           .hero-content { display: flex; flex-direction: column; align-items: center; }
@@ -286,7 +287,10 @@ export default function Landing() {
         @media (max-width: 420px) {
           .landing-topbar { height: 60px !important; padding: 0 10px !important; }
           .landing-logo-text { font-size: 15px !important; }
+          .landing-logo-wrap { min-width: 0 !important; }
+          .landing-logo-text { max-width: 95px !important; overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important; }
           .landing-login-btn { padding: 7px 12px !important; font-size: 12px !important; border-radius: 8px !important; }
+          .landing-right-controls { gap: 6px !important; margin-right: 8px !important; }
           .landing-mobile-nav { padding: 0 10px 10px !important; gap: 8px !important; }
           .landing-mobile-nav a { padding: 6px 10px !important; font-size: 11px !important; }
           .hero-buttons { width: 100%; }
@@ -307,9 +311,9 @@ export default function Landing() {
           transition: "all 0.3s",
         }}
       >
-        <div className="landing-topbar" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div className="landing-topbar" style={{ maxWidth: 1200, width: "100%", margin: "0 auto", padding: "0 24px", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           {/* Logo */}
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div className="landing-logo-wrap" style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
             <div style={{ width: 38, height: 38, borderRadius: 10, background: "linear-gradient(135deg,#6366f1,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <BookOpen size={20} color="#fff" />
             </div>
@@ -324,7 +328,7 @@ export default function Landing() {
           </nav>
 
           {/* Right controls */}
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div className="landing-right-controls" style={{ display: "flex", alignItems: "center", gap: 12, flexShrink: 0 }}>
             <ThemeToggle />
 
             <Link href="/login" id="header-login-btn">
