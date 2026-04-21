@@ -1,6 +1,6 @@
 import { getDataSource } from "@/lib/typeorm";
 import { Material } from "@/backend/entities/Material";
-import { supabase } from "@/lib/supabase";
+import { getSupabaseClient } from "@/lib/supabase";
 
 export interface UploadData {
     title: string;
@@ -98,6 +98,7 @@ export async function deleteMaterial(id: string) {
  */
 export async function uploadFileToStorage(file: File, bucketName: string = "study-materials"): Promise<{ url: string | null, error: string | null }> {
     try {
+        const supabase = getSupabaseClient();
         const fileExt = file.name.split(".").pop();
         const fileName = `${Math.random().toString(36).substring(2)}_${Date.now()}.${fileExt}`;
         const filePath = `uploads/${fileName}`;
