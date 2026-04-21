@@ -6,12 +6,19 @@ import { useNotes } from "@/context/NotesContext";
 import { BRANCHES, SEMESTERS } from "@/types";
 import { NoteCard } from "@/components/NoteCard";
 import { BackButton } from "@/components/BackButton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function Browse() {
   const { notes } = useNotes();
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedBranch, setSelectedBranch] = useState("");
-  const [selectedSemester, setSelectedSemester] = useState("");
+  const [selectedBranch, setSelectedBranch] = useState("all");
+  const [selectedSemester, setSelectedSemester] = useState("all");
   const [showFilters, setShowFilters] = useState(false);
 
   const filteredNotes = useMemo(() => {
@@ -21,9 +28,9 @@ export default function Browse() {
         note.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
         note.description.toLowerCase().includes(searchTerm.toLowerCase());
 
-      const matchesBranch = !selectedBranch || note.branch === selectedBranch;
+      const matchesBranch = selectedBranch === "all" || note.branch === selectedBranch;
       const matchesSemester =
-        !selectedSemester || note.semester === selectedSemester;
+        selectedSemester === "all" || note.semester === selectedSemester;
 
       return matchesSearch && matchesBranch && matchesSemester;
     });
@@ -31,11 +38,13 @@ export default function Browse() {
 
   const clearFilters = () => {
     setSearchTerm("");
-    setSelectedBranch("");
-    setSelectedSemester("");
+    setSelectedBranch("all");
+    setSelectedSemester("all");
   };
 
-  const hasActiveFilters = searchTerm || selectedBranch || selectedSemester;
+  const hasActiveFilters = Boolean(
+    searchTerm || selectedBranch !== "all" || selectedSemester !== "all"
+  );
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
@@ -108,31 +117,33 @@ export default function Browse() {
                 showFilters ? "block" : "hidden md:grid"
               }`}
             >
-              <select
-                value={selectedBranch}
-                onChange={(e) => setSelectedBranch(e.target.value)}
-                className="w-full px-6 py-4 bg-background border border-border rounded-xl text-foreground focus:outline-hidden focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all font-medium appearance-none cursor-pointer"
-              >
-                <option value="">All Branches</option>
-                {BRANCHES.map((branch) => (
-                  <option key={branch} value={branch}>
-                    {branch}
-                  </option>
-                ))}
-              </select>
+              <Select value={selectedBranch} onValueChange={setSelectedBranch}>
+                <SelectTrigger className="w-full h-14 px-6 rounded-xl bg-background border-border text-foreground font-medium">
+                  <SelectValue placeholder="All Branches" />
+                </SelectTrigger>
+                <SelectContent className="max-h-60">
+                  <SelectItem value="all">All Branches</SelectItem>
+                  {BRANCHES.map((branch) => (
+                    <SelectItem key={branch} value={branch}>
+                      {branch}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
-              <select
-                value={selectedSemester}
-                onChange={(e) => setSelectedSemester(e.target.value)}
-                className="w-full px-6 py-4 bg-background border border-border rounded-xl text-foreground focus:outline-hidden focus:border-primary/50 focus:ring-4 focus:ring-primary/10 transition-all font-medium appearance-none cursor-pointer"
-              >
-                <option value="">All Semesters</option>
-                {SEMESTERS.map((semester) => (
-                  <option key={semester} value={semester}>
-                    {semester}
-                  </option>
-                ))}
-              </select>
+              <Select value={selectedSemester} onValueChange={setSelectedSemester}>
+                <SelectTrigger className="w-full h-14 px-6 rounded-xl bg-background border-border text-foreground font-medium">
+                  <SelectValue placeholder="All Semesters" />
+                </SelectTrigger>
+                <SelectContent className="max-h-60">
+                  <SelectItem value="all">All Semesters</SelectItem>
+                  {SEMESTERS.map((semester) => (
+                    <SelectItem key={semester} value={semester}>
+                      {semester}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
 
               {hasActiveFilters && (
                 <button

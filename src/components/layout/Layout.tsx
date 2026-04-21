@@ -42,18 +42,18 @@ export default function MainLayout({
       <div className="min-h-screen flex flex-col bg-background text-foreground">
         {/* Header */}
         <header className="bg-background/80 backdrop-blur-md border-b border-border sticky top-0 z-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between h-20">
-              <Link href="/home" className="flex items-center gap-2 group transition-all">
-                <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(79,70,229,0.4)] group-hover:scale-105 transition-transform">
+          <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16 sm:h-20 gap-3">
+              <Link href="/home" className="flex items-center gap-2 group transition-all min-w-0">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(79,70,229,0.4)] group-hover:scale-105 transition-transform shrink-0">
                   <BookOpen className="w-6 h-6 text-white" />
                 </div>
-                <span className="text-2xl font-bold bg-linear-to-r from-foreground via-foreground/80 to-primary/60 bg-clip-text text-transparent">
+                <span className="text-base min-[380px]:text-lg sm:text-2xl font-bold bg-linear-to-r from-foreground via-foreground/80 to-primary/60 bg-clip-text text-transparent truncate">
                   StudyHub
                 </span>
               </Link>
 
-              <div className="flex items-center gap-8">
+              <div className="flex items-center gap-1 min-[380px]:gap-3 sm:gap-8">
                 <nav className="hidden lg:flex gap-2">
                   {navLinks.map((link) => {
                     const Icon = link.icon;
@@ -75,12 +75,12 @@ export default function MainLayout({
                   })}
                 </nav>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1 min-[380px]:gap-2 sm:gap-3">
                   <ThemeToggle />
                   <DropdownMenu>
                     <DropdownMenuTrigger className="outline-hidden group">
-                      <div className="flex items-center gap-3 px-3 py-1.5 rounded-xl hover:bg-muted-surface transition-all cursor-pointer border border-transparent hover:border-border">
-                        <Avatar className="w-10 h-10 border-2 border-border group-hover:border-primary transition-all shadow-lg shrink-0">
+                      <div className="flex items-center gap-2 sm:gap-3 px-1 min-[380px]:px-2 sm:px-3 py-1.5 rounded-xl hover:bg-muted-surface transition-all cursor-pointer border border-transparent hover:border-border">
+                        <Avatar className="w-8 h-8 min-[380px]:w-10 min-[380px]:h-10 border-2 border-border group-hover:border-primary transition-all shadow-lg shrink-0">
                           <AvatarImage src="" />
                           <AvatarFallback className="bg-primary/10 text-primary font-bold uppercase text-xs">
                             {user?.name?.split(' ').map(n => n[0]).join('').substring(0, 2) || "U"}
@@ -117,7 +117,7 @@ export default function MainLayout({
             </div>
 
             {/* Mobile Navigation */}
-            <nav className="lg:hidden flex gap-1 pb-4 overflow-x-auto scrollbar-hide">
+            <nav className="lg:hidden flex gap-1 pb-3 sm:pb-4 overflow-x-auto scrollbar-hide">
               {navLinks.map((link) => {
                 const Icon = link.icon;
                 const isActive = pathname === link.href;
@@ -125,7 +125,7 @@ export default function MainLayout({
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap font-medium ${
+                    className={`flex items-center gap-2 px-2.5 min-[380px]:px-3 py-2 rounded-xl transition-all whitespace-nowrap font-medium text-xs min-[380px]:text-sm sm:text-base ${
                       isActive
                         ? "bg-primary/20 text-primary"
                         : "text-muted-foreground hover:text-foreground"

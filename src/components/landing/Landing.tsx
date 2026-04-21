@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { useAuth } from "@/context/AuthContext";
+import { toast } from "sonner";
 import {
   BookOpen,
   Upload,
@@ -13,8 +12,6 @@ import {
   Download,
   Cloud,
   ChevronRight,
-  Sun,
-  Moon,
   Cpu,
   Radio,
   Settings,
@@ -133,11 +130,10 @@ const techStack = [
 ];
 
 export default function Landing() {
-  const router = useRouter();
-  const { isAuthenticated } = useAuth();
   const { resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   const [activeBranch, setActiveBranch] = useState("CSE");
+  const [activeSemester, setActiveSemester] = useState("Sem 1");
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -273,6 +269,10 @@ export default function Landing() {
 
         @media (max-width: 900px) {
           .nav-links { display: none !important; }
+          .landing-topbar { height: 64px !important; padding: 0 14px !important; }
+          .landing-logo-text { font-size: 16px !important; }
+          .landing-login-btn { padding: 8px 16px !important; font-size: 13px !important; }
+          .landing-mobile-nav { display: flex !important; }
           .hero-grid, .about-grid { grid-template-columns: 1fr !important; text-align: center; gap: 40px !important; }
           .hero-content { display: flex; flex-direction: column; align-items: center; }
           .hero-buttons, .hero-stats { justify-content: center; }
@@ -282,6 +282,17 @@ export default function Landing() {
         }
         @media (max-width: 600px) {
           .about-features-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 420px) {
+          .landing-topbar { height: 60px !important; padding: 0 10px !important; }
+          .landing-logo-text { font-size: 15px !important; }
+          .landing-login-btn { padding: 7px 12px !important; font-size: 12px !important; border-radius: 8px !important; }
+          .landing-mobile-nav { padding: 0 10px 10px !important; gap: 8px !important; }
+          .landing-mobile-nav a { padding: 6px 10px !important; font-size: 11px !important; }
+          .hero-buttons { width: 100%; }
+          .hero-buttons .glow-btn, .hero-buttons .outline-btn { width: 100%; justify-content: center; }
+          .hero-stats { gap: 20px !important; }
+          .branch-pill { min-width: 70px !important; padding: 14px 12px !important; }
         }
       `}</style>
 
@@ -296,13 +307,13 @@ export default function Landing() {
           transition: "all 0.3s",
         }}
       >
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div className="landing-topbar" style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", height: 68, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           {/* Logo */}
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
             <div style={{ width: 38, height: 38, borderRadius: 10, background: "linear-gradient(135deg,#6366f1,#4f46e5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <BookOpen size={20} color="#fff" />
             </div>
-            <span style={{ fontSize: 18, fontWeight: 700, color: theme.text }}>Study Hub</span>
+            <span className="landing-logo-text" style={{ fontSize: 18, fontWeight: 700, color: theme.text }}>Study Hub</span>
           </div>
 
           {/* Nav Links */}
@@ -317,16 +328,44 @@ export default function Landing() {
             <ThemeToggle />
 
             <Link href="/login" id="header-login-btn">
-              <button className="glow-btn" style={{ padding: "9px 22px", fontSize: 14 }}>
+              <button className="glow-btn landing-login-btn" style={{ padding: "9px 22px", fontSize: 14 }}>
                 Login
               </button>
             </Link>
           </div>
         </div>
+        <div
+          className="landing-mobile-nav"
+          style={{
+            display: "none",
+            gap: 10,
+            overflowX: "auto",
+            padding: "0 14px 12px",
+            borderTop: `1px solid ${theme.border}`,
+          }}
+        >
+          {["Features", "Categories", "How It Works", "Reviews", "About Us"].map((item) => (
+            <a
+              key={item}
+              href={`#${item.toLowerCase().replace(/ /g, "-")}`}
+              style={{
+                flexShrink: 0,
+                color: theme.muted,
+                border: `1px solid ${theme.border}`,
+                borderRadius: 999,
+                padding: "7px 12px",
+                fontSize: 12,
+                textDecoration: "none",
+              }}
+            >
+              {item}
+            </a>
+          ))}
+        </div>
       </header>
 
       {/* ── Hero ──────────────────────────────────────────────────────── */}
-      <section style={{ minHeight: "100vh", display: "flex", alignItems: "center", padding: "100px 24px 60px", position: "relative", overflow: "hidden" }}>
+      <section style={{ minHeight: "100vh", display: "flex", alignItems: "center", padding: "100px 16px 60px", position: "relative", overflow: "hidden" }}>
         {/* Background orbs */}
         <div style={{ position: "absolute", top: "15%", left: "8%", width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%)", pointerEvents: "none" }} />
         <div style={{ position: "absolute", bottom: "10%", right: "5%", width: 300, height: 300, borderRadius: "50%", background: "radial-gradient(circle, rgba(56,189,248,0.1) 0%, transparent 70%)", pointerEvents: "none" }} />
@@ -496,14 +535,41 @@ export default function Landing() {
           {/* Semesters */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
             {semesters.map((sem) => (
-              <Link key={sem} href="/login" id={`sem-${sem.replace(" ", "").toLowerCase()}`}>
-                <button style={{ background: "rgba(99,102,241,0.08)", border: `1px solid rgba(99,102,241,0.2)`, color: "#818cf8", borderRadius: 8, padding: "10px 20px", fontSize: 14, fontWeight: 600, cursor: "pointer", transition: "all 0.2s" }}
-                  onMouseOver={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(99,102,241,0.2)"; }}
-                  onMouseOut={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(99,102,241,0.08)"; }}
-                >
-                  {sem}
-                </button>
-              </Link>
+              <button
+                key={sem}
+                id={`sem-${sem.replace(" ", "").toLowerCase()}`}
+                type="button"
+                onClick={() => {
+                  setActiveSemester(sem);
+                  toast.info(`${sem} selected`, {
+                    description: "Login to browse notes for this semester.",
+                  });
+                }}
+                style={{
+                  background:
+                    activeSemester === sem ? "rgba(99,102,241,0.22)" : "rgba(99,102,241,0.08)",
+                  border:
+                    activeSemester === sem
+                      ? "1px solid rgba(99,102,241,0.6)"
+                      : "1px solid rgba(99,102,241,0.2)",
+                  color: "#818cf8",
+                  borderRadius: 8,
+                  padding: "10px 20px",
+                  fontSize: 14,
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  transition: "all 0.2s",
+                }}
+                onMouseOver={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.background = "rgba(99,102,241,0.2)";
+                }}
+                onMouseOut={(e) => {
+                  (e.currentTarget as HTMLButtonElement).style.background =
+                    activeSemester === sem ? "rgba(99,102,241,0.22)" : "rgba(99,102,241,0.08)";
+                }}
+              >
+                {sem}
+              </button>
             ))}
           </div>
         </div>
