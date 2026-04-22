@@ -17,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="h-full">
-      <body className={`${inter.className} min-h-full flex flex-col`}>
+    <html lang="en" suppressHydrationWarning className="h-full overflow-x-hidden w-full">
+      <body className={`${inter.className} min-h-full flex flex-col overflow-x-hidden w-full`}>
         <Providers>
           {children}
           <Toaster position="top-right" />

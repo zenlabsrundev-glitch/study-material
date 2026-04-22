@@ -163,7 +163,7 @@ export default function Landing() {
   };
 
   return (
-    <div style={{ background: theme.bg, color: theme.text, minHeight: "100vh", fontFamily: "'Inter', sans-serif", transition: "all 0.3s", width: "100%", maxWidth: "100vw", overflowX: "hidden" }}>
+    <div style={{ background: theme.bg, color: theme.text, minHeight: "100vh", fontFamily: "'Inter', sans-serif", transition: "all 0.3s", width: "100%", overflowX: "hidden" }}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
