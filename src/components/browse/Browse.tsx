@@ -57,7 +57,7 @@ export default function Browse() {
             Search and filter study materials by branch, semester, and subject
           </p>
         </div>
-        <div className="text-sm font-semibold text-muted-foreground bg-muted-surface px-4 py-2 rounded-xl border border-border">
+        <div className="text-sm font-semibold text-muted-foreground bg-muted-surface px-4 py-2 rounded-xl border border-border w-full md:w-auto text-center md:text-left">
           Found <span className="text-primary">{filteredNotes.length}</span> {filteredNotes.length === 1 ? "note" : "notes"}
         </div>
       </div>
@@ -161,7 +161,7 @@ export default function Browse() {
 
       {/* Notes Grid */}
       {filteredNotes.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredNotes.map((note) => (
             <NoteCard key={note.id} note={note} showDelete={false} />
           ))}

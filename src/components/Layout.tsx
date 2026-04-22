@@ -21,12 +21,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex items-center justify-between h-16">
             <Link href="/home" className="flex items-center gap-2">
               <BookOpen className="w-8 h-8 text-primary" />
-              <span className="text-xl font-bold bg-linear-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
+              <span className="text-lg sm:text-xl font-bold bg-linear-to-r from-foreground to-foreground/60 bg-clip-text text-transparent">
                 StudyHub
               </span>
             </Link>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <nav className="hidden md:flex gap-1">
                 {navLinks.map((link) => {
                   const Icon = link.icon;

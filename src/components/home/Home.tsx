@@ -91,7 +91,7 @@ export default function Home() {
           <TrendingUp className="w-3 h-3" />
           The Ultimate Student Portal
         </div>
-        <h1 className="text-5xl md:text-7xl font-black text-foreground leading-tight tracking-tighter">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-foreground leading-tight tracking-tighter">
           Study Material & <br />
           <span className="bg-linear-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
             Notes Sharing Portal
@@ -101,17 +101,17 @@ export default function Home() {
           A high-performance collaborative platform for engineering students to upload and download
           semester-wise study materials.
         </p>
-        <div className="flex flex-wrap gap-6 justify-center pt-4">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6 justify-center pt-4">
           <Link
             href="/upload"
-            className="px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-500 transition-all shadow-[0_0_20px_rgba(79,70,229,0.4)] hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] flex items-center gap-2 group"
+            className="w-full sm:w-auto justify-center px-8 py-4 bg-indigo-600 text-white rounded-2xl font-bold hover:bg-indigo-500 transition-all shadow-[0_0_20px_rgba(79,70,229,0.4)] hover:shadow-[0_0_30px_rgba(79,70,229,0.6)] flex items-center gap-2 group"
           >
             <Upload className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
             Upload Notes
           </Link>
           <Link
             href="/browse"
-            className="px-8 py-4 bg-muted-surface text-foreground border border-border rounded-2xl font-bold hover:bg-muted-surface/80 transition-all flex items-center gap-2"
+            className="w-full sm:w-auto justify-center px-8 py-4 bg-muted-surface text-foreground border border-border rounded-2xl font-bold hover:bg-muted-surface/80 transition-all flex items-center gap-2"
           >
             <Search className="w-5 h-5" />
             Browse Portal
